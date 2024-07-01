@@ -116,11 +116,6 @@ function Info() {
           </div>
         </div>
       </div>
-
-      <footer className="mt-8 text-center text-sm text-gray-500">
-        <p>created by username</p>
-        <p>devChallenges.io</p>
-      </footer>
     </div>
   );
 }

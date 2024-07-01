@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../services/UserContext';
+import axios from 'axios';
 
 function Update() {
   const { user, updateUser, logout } = useUser();
@@ -51,14 +52,16 @@ function Update() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
-      const formDataToUpdate = new FormData();
-      formDataToUpdate.append('name', formData.name);
-      formDataToUpdate.append('biografia', formData.bio);
-      formDataToUpdate.append('phone', formData.phone);
-      formDataToUpdate.append('email', formData.email);
-      formDataToUpdate.append('password', formData.password);
-      formDataToUpdate.append('perfil', photo);
+      const formDataToUpdate = {
+        name: formData.name,
+        biografia: formData.bio,
+        phone: formData.phone,
+        email: formData.email,
+        password: formData.password,
+        perfil: photo
+      };
 
       const updatedUser = await updateUser(formDataToUpdate);
       setUpdateMessage('Datos actualizados');
