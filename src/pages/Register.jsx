@@ -1,51 +1,52 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Asegúrate de importar useHistory desde react-router-dom
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
+import ButtonLogos from "../components/pagesmult/BtnLog";
+import Inputs from "../components/pagesmult/Inputs";
+import Option from "../components/pagesmult/Option";
+import BtnRegister from "../components/register/BtnFormReg";
+import LinkR from "../components/register/EnlaceLog";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const history = useHistory(); // Utiliza useHistory para manejar la redirección
+function Register() {
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
-        email,
-        password,
-      });
+    const data = {
+      email: e.target[0].value,
+      password: e.target[1].value,
+    };
 
-      console.log('User registered:', response.data);
-      // Redirige al usuario a la página de login después de que se registre exitosamente
-      history.push('/login');
+    try {
+      const res = await axios.post('http://localhost:3000/api/auth/register', data);
+      alert(res.data.message);
+      navigate('/');
     } catch (error) {
-      console.error('Error registering user:', error);
+      console.error(error);
+      alert(error.response.data.message);
     }
   };
 
   return (
-    <form onSubmit={handleRegister}>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-3xl border border-gray-300">
+        <img className="w-36" src="/devchallenges.svg" alt="Logo" />
+        <h2 className="mt-6 text-2xl font-medium text-gray-900">
+          Join thousands of learners from around the world
+        </h2>
+        <p className="mt-2 text-lg text-gray-600">
+          Master web development by making real-life projects. There are multiple paths for you to choose.
+        </p>
+        <form onSubmit={handleRegister} className="mt-8 space-y-6">
+          <Inputs />
+          <BtnRegister />
+        </form>
+        <Option />
+        <ButtonLogos />
+        <LinkR />
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+    </div>
   );
-};
+}
 
 export default Register;
