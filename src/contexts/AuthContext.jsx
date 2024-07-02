@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -35,4 +36,5 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+export const authHook = () => useContext(AuthContext);
 export default AuthContext;

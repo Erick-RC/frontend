@@ -1,7 +1,7 @@
-import { useAuth } from '../hooks/useAuth';
+import { authHook } from '../hooks/authHook';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout } = authHook();
 
   if (!user) return null;
 

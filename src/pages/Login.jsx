@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ButtonLogos from '../components/pagesmult/BtnLog';
-import Inputs from '../components/pagesmult/Inputs';
-import BtnLogin from '../components/login/BtnFormLog';
-import EnlaceRegist from '../components/login/EnlaceRegist';
-import Option from '../components/pagesmult/Option';
+import ButtonLogos from '../components/subComponents/LoginBtn.jsx';
+import Inputs from '../components/subComponents/Input.jsx';
+import BtnLogin from '../components/subComponents/LogoutBtn.jsx';
+import EnlaceRegist from '../components/subComponents/LinkToReg.jsx';
+import Option from '../components/subComponents/SpanOptions.jsx';
 import UserContext from '../services/UserContext';
 
 function Login() {

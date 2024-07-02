@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import ButtonLogos from "../components/pagesmult/BtnLog";
-import Inputs from "../components/pagesmult/Inputs";
-import Option from "../components/pagesmult/Option";
-import BtnRegister from "../components/register/BtnFormReg";
-import LinkR from "../components/register/EnlaceLog";
+import ButtonLogos from "../components/subComponents/LoginBtn";
+import Inputs from "../components/subComponents/Input";
+import Option from "../components/subComponents/SpanOptions";
+import BtnRegister from "../components/subComponents/RegisterBtn";
+import LinkR from "../components/subComponents/LinkToReg";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
