@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useCallback } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import ButtonLogos from "../components/subComponents/LoginBtn";
 import Inputs from "../components/subComponents/Input";
 import Option from "../components/subComponents/SpanOptions";
 import BtnRegister from "../components/subComponents/RegisterBtn";
 import LinkR from "../components/subComponents/LinkToReg";
-import { useNavigate } from "react-router-dom";
 
-function Register() {
+const Register = () => {
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleRegister = useCallback(async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
     const data = {
-      email: e.target[0].value,
-      password: e.target[1].value,
+      email: formData.get('email'),
+      password: formData.get('password'),
     };
 
     try {
@@ -23,9 +24,9 @@ function Register() {
       navigate('/');
     } catch (error) {
       console.error(error);
-      alert(error.response.data.message);
+      alert(error.response?.data?.message || 'Registration failed');
     }
-  };
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -47,6 +48,6 @@ function Register() {
       </div>
     </div>
   );
-}
+};
 
 export default Register;

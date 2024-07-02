@@ -1,21 +1,25 @@
-import { authHook } from '../hooks/authHook';
+import React from 'react';
+import { useAuth } from '../hooks/authHook';
 
 const Profile = () => {
-  const { user, logout } = authHook();
+  const { user, logout } = useAuth();
 
-  if (!user) return null;
-
-  return (
-    <div>
+  return user ? (
+    <div className="profile-container">
       <h1>Profile</h1>
-      <p>Email: {user.email}</p>
-      <p>Name: {user.name}</p>
-      <p>Biography: {user.biografia}</p>
-      <p>Phone: {user.phone}</p>
-      <p>Photo: <img src={user.photo} alt="profile" /></p>
-      <button onClick={logout}>Logout</button>
+      <div className="profile-info">
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Biography:</strong> {user.biografia}</p>
+        <p><strong>Phone:</strong> {user.phone}</p>
+        <div className="profile-photo">
+          <strong>Photo:</strong> 
+          <img src={user.photo} alt="profile" />
+        </div>
+      </div>
+      <button onClick={logout} className="logout-button">Logout</button>
     </div>
-  );
+  ) : null;
 };
 
 export default Profile;

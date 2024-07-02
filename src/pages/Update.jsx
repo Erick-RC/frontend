@@ -1,9 +1,8 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../services/UserContext';
-import axios from 'axios';
 
-function Update() {
+const Update = () => {
   const { user, updateUser, logout } = useUser();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,17 +28,18 @@ function Update() {
     setPhoto(user.perfil || '/path-to-default-profile-image.jpg');
   }, [user]);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = useCallback(() => setIsMenuOpen(prevState => !prevState), []);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  }, []);
 
-  const handlePhotoClick = () => {
+  const handlePhotoClick = useCallback(() => {
     fileInputRef.current.click();
-  };
+  }, []);
 
-  const handlePhotoChange = (e) => {
+  const handlePhotoChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -48,9 +48,9 @@ function Update() {
       };
       reader.readAsDataURL(file);
     }
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     
     try {
@@ -63,23 +63,23 @@ function Update() {
         perfil: photo
       };
 
-      const updatedUser = await updateUser(formDataToUpdate);
+      await updateUser(formDataToUpdate);
       setUpdateMessage('Datos actualizados');
-      navigate('/info'); // Redirige después de actualizar correctamente
+      navigate('/info');
     } catch (error) {
       console.error('Error updating user:', error.response ? error.response.data : error.message);
       setUpdateMessage('Los datos no fueron actualizados');
     }
-  };
+  }, [formData, photo, updateUser, navigate]);
 
-  const handleBack = () => {
-    navigate('/info'); // Asegura que vuelva a la página anterior
-  };
+  const handleBack = useCallback(() => {
+    navigate('/info');
+  }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
     navigate('/login');
-  };
+  }, [logout, navigate]);
 
   return (
     <div className="font-sans min-h-screen">
@@ -191,6 +191,6 @@ function Update() {
       </div>
     </div>
   );
-}
+};
 
 export default Update;

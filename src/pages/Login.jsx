@@ -15,6 +15,7 @@ function Login() {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
+
     try {
       await login({ email, password });
       navigate('/info'); // Redirige a la ruta protegida
@@ -26,7 +27,7 @@ function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-3xl border border-gray-300">
-        <img className="mx-auto w-36 " src="/devchallenges.svg" alt="Logo" />
+        <img className="mx-auto w-36" src="/devchallenges.svg" alt="Logo" />
         <h2 className="mt-6 text-2xl font-medium text-black">Login</h2>
         <form onSubmit={handleLogin} className="mt-8 space-y-8">
           <Inputs />
